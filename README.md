@@ -2,16 +2,15 @@
 ![auto workflow](https://github.com/fdobad/template-python-package/actions/workflows/auto.yml/badge.svg)
 <a href=https://github.com/psf/black>![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)</a>
 
-__version__ = 'v0.0.1-0-gecfa54c-dirty'
-
-# Template Overview
+# Template python package
+## Overview
 
 * A [source layout][src-layout] python project/distribution with 2 packages/modules
 * [pyproject.toml][pyproject_config] configuration file
 * Auto-documentation using pdoc3, publishing pages in `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
 * A simple precommit hook to auto-update versions in python files
 
-# Goal
+## Goal
 
 An easy-to-document&version python distribution/project, by self publishing code docstrings and being pip installable.
 
@@ -40,9 +39,11 @@ my-project-name @ git+https://github.com/user/repo.git@SUFFIX
 ```bash
 git clone git@git...
 cd repo
-# git checkout -b my_new_feature
-# pip install -r requirements.dev.txt
-# git clean -dfX -n
+git checkout -b my_new_feature
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.dev.txt
+git clean -dfX -n
 pip install -e .
 pdoc --http localhost:8080 --config latex_math=True mypkg
 ```

@@ -5,14 +5,14 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "my-project-name"
+name = "fdobad-template"
 authors = [
     {name = "Fernando Badilla", email = "fbadilla@ing.uchile.cl"},
 ]
-description = "My project description"
+description = "Python template project"
 readme = "README.md"
-requires-python = ">=3.11"
-keywords = ["template", "package"]
+requires-python = ">=3.9"
+keywords = ["template", "distribution", "example"]
 license = {text = "GPLv3"} # , file = "LICENSE.txt"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -23,11 +23,21 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[tool.setuptools.dynamic]
+version = {file = ".version"}
+readme = {file = ["README.md"], content-type = "text/markdown"}
+
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra"
+addopts = [
+    "-ra",
+    "--import-mode=importlib",
+]
 testpaths = [
     "tests",
+]
+pythonpath = [
+  "src"
 ]
 
 # [project.urls]
