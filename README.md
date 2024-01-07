@@ -112,8 +112,12 @@ pdoc --http localhost:8080 --config latex_math=True mypkg
 pdoc --http localhost:8081 --config latex_math=True otherpkg
 ```
 ### ugly tips
-* uninstall project before testing
+* ignore hooks permissions
+```bash
+git config advice.ignoredHook false
 ```
+* uninstall project before testing
+```bash
 pip uninstall my-project-name
 pytest
 ```
@@ -136,7 +140,7 @@ git clean -dfX
 There're two actions (in .github/workflow) to build the docs webpage:
 
 * manual(lly): publish the webpage action; use `pre-push` hook to build the docs before pushing
-* auto: builds & publish the docs online; needs updated requirements.txt & pyproject.toml:dependencies,  setup to main-branch pushes only
+* auto: builds & publish the docs online; needs updated requirements.txt & pyproject.toml:dependencies, setup to main-branch pushes only
 
 ## git tagging
 ```bash
