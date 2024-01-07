@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Build the documentation
+if [ -d doc/fdobad-template ]; then
+    rm -r doc/fdobad-template
+fi
+pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
+
+# Add the modified files to the commit
+git add doc/fdobad-template/*

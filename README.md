@@ -2,50 +2,50 @@
 ![auto workflow](https://github.com/fdobad/template-python-package/actions/workflows/auto.yml/badge.svg)
 <a href=https://github.com/psf/black>![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)</a>
 
-# Template python package
-## Overview
+# A template python package
+## Features
 
-* A [source layout][src-layout] python project/distribution with 2 packages/modules
+* A sample [source layout][src-layout] python project/distribution with 2 packages/modules (w&wo logging)
 * [pyproject.toml][pyproject_config] configuration file
-* Auto-documentation using pdoc3, publishing pages in `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
-* A simple precommit hook to auto-update versions in python files
+* Tests via pytest
+* Documentation gets built from code docstrings to html, using pdoc3, publishing pages in `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
+* pre-commit hook to auto-update versions in python files
+* pre-push hook to build documentation
 
-## Goal
 
-An easy-to-document&version python distribution/project, by self publishing code docstrings and being pip installable.
-
-* Easy to install:
+## Usage
+### End user installation
+A. Latest default branch head
 ```bash
 pip install git+https://github.com/user/repo.git
 ```
-
-* To version:
+B. Specific version
 ```bash
 pip install git+https://github.com/user/repo.git@SUFFIX
-# SUFFIX CAN BE:
-tip of branch:      @branch
-specific commit:    @commit_id  (40 digits long SHA-hash not 7)
-tag (not dirty):    @tag
-...
-pkg: @[tag|branch]#egg=mypackage
-faster: pip install https://github.com/user/repository/archive/branch.[zip|wheel]
+    # SUFFIX CAN BE:
+    tip of branch:      @branch
+    specific commit:    @commit_id  (40 digits long SHA-hash not 7)
+    tag (not dirty):    @tag
+    ...
+    pkg: @[tag|branch]#egg=mypackage
+    faster: pip install https://github.com/user/repository/archive/branch.[zip|wheel]
 ```
-Or as a line in requirements.txt:
+C. Line in pip requirements.txt:
 ```
 my-project-name @ git+https://github.com/user/repo.git@SUFFIX
 ```
-
-* To develop, install with editable flag:
+### Developer: install editable
 ```bash
 git clone git@git...
 cd repo
+cp hooks/* .git/hooks/.
 git checkout -b my_new_feature
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.dev.txt
 git clean -dfX -n
 pip install -e .
-pdoc --http localhost:8080 --config latex_math=True mypkg
+pdoc --http localhost:8080 --config latex_math=True template-module 
 ```
 
 # Daily usage 
