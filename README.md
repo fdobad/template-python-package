@@ -7,8 +7,8 @@
 
 * [pyproject.toml][pyproject_config] project configuration
 * [Source layout][src-layout] directory structure; project/distribution with 2 packages/modules (w&wo logging)
-* [pytest] framework for functional testing 
-* [pdoc3] framework for turning code docstrings to documentation web pages; local `doc/my-repo-name` is published to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
+* [pytest][pytest] framework for functional testing 
+* [pdoc3][pdoc3] framework for turning code docstrings to documentation web pages; local `doc/my-repo-name` is published to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
 * Git Hooks:
     - pre-commit auto-updates version in python files
     - pre-push builds documentation web page
@@ -17,7 +17,23 @@
     - manual.yml : publish documentation web page
 
 ## Usage
-### User installation
+* Python script
+```python
+from fdo_mod import fdo_module
+fdo_module.main(['2023','1'])
+```
+* CLI
+```bash
+python -m fdo_mod.fdo_module 2023 1
+python -m bad_mod -h
+```
+* Python script that setups its logger 
+```python
+import bad_mod
+logger.getLogger('bad_mod').setLevel(logging.INFO)
+TODO
+```
+## Installation
 A. Latest default branch head
 ```bash
 pip install git+https://github.com/user/repo.git
@@ -37,24 +53,33 @@ C. Line in pip requirements.txt:
 ```
 my-project-name @ git+https://github.com/user/repo.git@SUFFIX
 ```
-### Developer editable install 
+## developer  
+* editable install (select hooks and yml.actions according to your needs)
 ```bash
 git clone git@git...
 cd repo
+chmod +x .git/hooks/*
 cp hooks/* .git/hooks/.
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.dev.txt
 pip install -e .
-pdoc --http localhost:8080 --config latex_math=True fdo_mod
 git checkout -b my_new_feature
 # drop -n to execute
 git clean -dfX -n
 ```
-
-# Daily usage 
-
-Activate you python venv, check if/where is installed: 
+* build documentation
+```bash
+# locally serve a live page of one package/module
+pdoc --http localhost:8080 --config latex_math=True fdo_mod
+# static files for current directory
+pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
+```
+* run tests
+```bash
+pytest
+```
+* forgot where is was?
 ```bash
 $ pip list | grep my-project-name
 my-project-name           0.0.0       /home/fdo/source/template-python-package
@@ -63,12 +88,12 @@ my-project-name           0.0.0       /home/fdo/source/template-python-package
 * Else from a commit, be sure it is pointing to the correct one on requirements.txt
 * Or uninstall and focus on testing
 
-Development tips:
+## development tips
+### good tips
 * Beware of python sessions not reloading the entire packages when `import mypkg`, these should be restarted, not reset.
 * Version control tracked files get automatically added to the release, so be tidy, aware of `.gitignore` & beware `git add .`
 * Do your feature branch to contribute! `git checkout -b my_new_feature`
-* Use docstrings and typed methods to build a great documentation! Even latex (to html or pdf) is available. [more info](https://pdoc3.github.io/pdoc/doc/pdoc/#what-objects-are-documented). For a method, describe input `parameters & returns`, additionaly `exceptions, classes, variables, module header`, `docstring examples` are not tested at the time, use `pytest` instead
-    
+* Use docstrings and typed methods to build a great documentation! Even latex (to html or pdf) is available. [more info](https://pdoc3.github.io/pdoc/doc/pdoc/#what-objects-are-documented).
 * All new `.py` files should have at least `version` & `author` in the header, sample:
 ```python
 #!python3
@@ -80,45 +105,26 @@ __copyright__ = "Copyright (C) 1 May 1886 Author Name"
 __license__ = "https://anticapitalist.software"
 __version__ = "v0.0.1"
 ```
-
-# Setup pattern
-
-1. Fork, rename, clone
-2. Enable github pages for the repo ?
-3. Enable the version updating hook:
-```bash
-cp hook/pre-commit .git/hooks/.
-chmod +x .git/hooks/pre-commit
-# TODO test on windows
-```
-4. Install requirements.dev.txt
-5. Change something, rebuilding the docs (`pdoc`) or run tests (`pytest`)
-6. Push (to feature branch)
-
-# Development
-
-## live
+* pdoc serve many modules
 ```bash
 pip install --editable .
 pdoc --http localhost:8080 --config latex_math=True mypkg
 pdoc --http localhost:8081 --config latex_math=True otherpkg
 ```
-## [testing with pytest][pytest]
+### ugly tips
+* uninstall project before testing
 ```
 pip uninstall my-project-name
 pytest
 ```
-## building
+* just build
 ```bash
 # just in case upgrade build tool
 python -m pip install --upgrade build
 # creates dist folder with .whl & tar.gz
 python -m build
-# recreates docs
-pdoc --html --force --output-dir doc .
 ```
-## troubleshoot
-Build files are not automatically cleaned!
+* Build files are not automatically cleaned!
 ```bash
 # check first -n is --dry-run
 git clean -dfX -n
@@ -126,23 +132,13 @@ git clean -dfX -n
 git clean -dfX
 ```
 
-# github actions
-There're two actions (in .github/workflow) to make the web page:
+## github actions
+There're two actions (in .github/workflow) to build the docs webpage:
 
-* manual: needs updating the doc before pushing  
-* auto: builds the doc online, needs updated requirements.txt or pyproject.toml:dependencies  
+* manual(lly): publish the webpage action; use `pre-push` hook to build the docs before pushing
+* auto: builds & publish the docs online; needs updated requirements.txt & pyproject.toml:dependencies,  setup to main-branch pushes only
 
-The headers needs some configuration (uncommenting) to work, a good practice is to enable them `on branch doc`, to not update needlessly (only 2000 free mins a month)
-
-# pdoc
-```bash
-pdoc --html --force --output-dir doc .
-pdoc --html --http : --force --output-dir doc --config latex_math=True .
-pdoc --html --http localhost:8080 --force --output-dir doc mypkg
-```
-https://github.com/pdoc3/pdoc/blob/master/pdoc/templates/config.mako
-
-# git tag
+## git tagging
 ```bash
 # list tags
 git tag
@@ -167,9 +163,10 @@ git push origin --tags
 * [learn about pytest][pytest]
 * [official userguide pyproject config at pypa][pyproject_config]  
 * [src project layout][src-layout]  
-* [auto python documentation][pdoc3]  
 * [auto publish documentation][auto-publish-docs]  
 * [add command line scripts][cli-scripts]  
+* [auto python documentation][pdoc3]  
+* [advanced pdoc](https://github.com/pdoc3/pdoc/blob/master/pdoc/templates/config.mako)
 
 # Code of Conduct
 

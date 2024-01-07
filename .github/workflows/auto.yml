@@ -26,8 +26,8 @@ jobs:
 
       - run: |
           pip install -r requirements.doc.txt
-          rm -r doc/template-python-package
-          pdoc --html --force --output-dir doc --config latex_math=True .
+          rm -rf doc/template-python-package
+          pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
 
       - uses: actions/upload-pages-artifact@v2
         with:
