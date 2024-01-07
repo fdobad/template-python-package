@@ -1,13 +1,16 @@
 #!python3
 """👋🌎
 This is the fdo_module docstring located on `src/fdo_mod/fdo_module.py`
-Code using this module should import it like this:
-    from fdo_mod import fdo_module, logger
-    logger.debug("Importing fdo_module version %s", fdo_module.__version__)
-    fdo_module.main()
+
+Scripts using this module should import it like this:
+```python
+from fdo_mod import fdo_module
+fdo_module.main()
+```
+You could import `surround_year_month` directly, but miss the main logic
 """
 __author__ = "Fernando Badilla"
-__version__ = 'v0.0.1-2-gf9985f7-dirty'
+__version__ = 'v0.0.1-3-g1db3be4-dirty'
 
 import logging
 import sys
@@ -41,21 +44,22 @@ def surround_year_month(y: int, m: int) -> list[tuple[int, int]]:
 
 
 def parse_args(argv):
-    """Parse command line arguments"""
+    """argument parser (besides -h) only recieves a list of integers, should be 2: year and month"""
     parser = ArgumentParser(description=__doc__)
     parser.add_argument("input_list", nargs="*", type=int, help="input year and month")
     return parser.parse_args(argv)
 
 
 def main(argv=None):
-    """ the main function:
+    """ parses arguments, if argv is None, uses sys.argv[1:],  
+    if args still empty, uses today's year and month
     Args:
         argv (list[str] | None): string list arguments, can be None to allow using  
             - sys.argv on command line usage   
             - or calling it from another script or module as fdo_basics.main(["-h"])
     Returns:
         int: 0 if success, 1 if error
-        """  # fmt: skip
+    """  # fmt: skip
     if argv is None:
         argv = sys.argv[1:]
     args = parse_args(argv)
