@@ -5,16 +5,19 @@
 # A template python package
 ## Features
 
-* A sample [source layout][src-layout] python project/distribution with 2 packages/modules (w&wo logging)
-* [pyproject.toml][pyproject_config] configuration file
-* Tests via pytest
-* Documentation gets built from code docstrings to html, using pdoc3, publishing pages in `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
-* pre-commit hook to auto-update versions in python files
-* pre-push hook to build documentation
-
+* [pyproject.toml][pyproject_config] project configuration
+* [Source layout][src-layout] directory structure; project/distribution with 2 packages/modules (w&wo logging)
+* [pytest] framework for functional testing 
+* [pdoc3] framework for turning code docstrings to documentation web pages; local `doc/my-repo-name` is published to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
+* Git Hooks:
+    - pre-commit auto-updates version in python files
+    - pre-push builds documentation web page
+* Github workflows:
+    - auto.yml : builds & publish documentation web page
+    - manual.yml : publish documentation web page
 
 ## Usage
-### End user installation
+### User installation
 A. Latest default branch head
 ```bash
 pip install git+https://github.com/user/repo.git
@@ -34,18 +37,19 @@ C. Line in pip requirements.txt:
 ```
 my-project-name @ git+https://github.com/user/repo.git@SUFFIX
 ```
-### Developer: install editable
+### Developer editable install 
 ```bash
 git clone git@git...
 cd repo
 cp hooks/* .git/hooks/.
-git checkout -b my_new_feature
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.dev.txt
-git clean -dfX -n
 pip install -e .
-pdoc --http localhost:8080 --config latex_math=True template-module 
+pdoc --http localhost:8080 --config latex_math=True fdo_mod
+git checkout -b my_new_feature
+# drop -n to execute
+git clean -dfX -n
 ```
 
 # Daily usage 
@@ -163,7 +167,7 @@ git push origin --tags
 * [learn about pytest][pytest]
 * [official userguide pyproject config at pypa][pyproject_config]  
 * [src project layout][src-layout]  
-* [auto python documentation][auto-document]  
+* [auto python documentation][pdoc3]  
 * [auto publish documentation][auto-publish-docs]  
 * [add command line scripts][cli-scripts]  
 
@@ -176,6 +180,6 @@ chat rooms, and fora is expected to follow the
 [pyproject_config]: https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
 [src-layout]: https://setuptools.pypa.io/en/latest/userguide/package_discovery.html#src-layout
 [cli-scripts]: https://setuptools.pypa.io/en/latest/userguide/entry_point.html
-[auto-document]: https://pdoc3.github.io/pdoc
+[pdoc3]: https://pdoc3.github.io/pdoc
 [auto-publish-docs]: https://github.com/mitmproxy/pdoc/blob/main/.github/workflows/docs.yml
 [pytest]: https://docs.pytest.org/en/latest/getting-started.html

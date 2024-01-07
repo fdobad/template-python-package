@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "fdobad-template"
 authors = [
-    {name = "Fernando Badilla", email = "fbadilla@ing.uchile.cl"},
+    {name = "Fernando Badilla Veliz", email = "fbadilla@ing.uchile.cl"},
 ]
 description = "Python template project"
 readme = "README.md"

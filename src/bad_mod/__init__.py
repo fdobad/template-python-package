@@ -1,7 +1,7 @@
 #!python3
 """ 👋🌎 This is the package docstring located on `src/bad_mod/__init__.py` """
 __author__ = "Fernando Badilla Veliz"
-__version__ = 'v0.0.1-1-gaded429-dirty'
+__version__ = 'v0.0.1-2-gf9985f7-dirty'
 
 import logging
 

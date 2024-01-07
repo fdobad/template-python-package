@@ -7,7 +7,7 @@ Code using this module should import it like this:
     fdo_module.main()
 """
 __author__ = "Fernando Badilla"
-__version__ = 'v0.0.1-1-gaded429-dirty'
+__version__ = 'v0.0.1-2-gf9985f7-dirty'
 
 import logging
 import sys
