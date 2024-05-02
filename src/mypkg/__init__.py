@@ -3,7 +3,7 @@
 This is the package docstring
 """
 __author__ = "Fernando Badilla"
-__version__ = 'v0.0.1-0-gecfa54c-dirty'
+__version__ = 'v0.0.1+4-gc984bd5-dirty'
 
 import logging as _logging
 
