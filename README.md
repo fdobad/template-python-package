@@ -2,7 +2,7 @@
 ![auto workflow](https://github.com/fdobad/template-python-package/actions/workflows/auto.yml/badge.svg)
 <a href=https://github.com/psf/black>![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)</a>
 
-  __version__ = 'v0.0.1-0-gecfa54c-dirty'
+  __version__ = 'v0.0.1+1-g811bb18-dirty'
 
 # Template Overview
 

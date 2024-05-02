@@ -73,8 +73,8 @@ def my_documented_function(*args, **kwargs) -> bool:
     return True
 
 
-def morefunc():
-    pass
+def morefunc(x: int = 0):
+    return x + 1
 
 
 def main(_argv):
