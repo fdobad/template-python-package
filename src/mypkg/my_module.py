@@ -74,7 +74,7 @@ def my_documented_function(*args, **kwargs) -> bool:
 
 
 def morefunc(x: int = 0):
-    return x**2
+    return x**2 + 3
 
 
 def main(_argv):
