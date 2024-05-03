@@ -10,8 +10,12 @@ from pkg_resources import DistributionNotFound, get_distribution
 try:
     __version__ = get_distribution(__name__).version
 except DistributionNotFound:
+    # FIXME two pyproject.toml version file ?
     # harcoded version number
-    from ._version import __version__
+    # from ._version import __version__
+
+    # fallback
+    __version__ = "0.0.0"
 
 import logging as _logging
 

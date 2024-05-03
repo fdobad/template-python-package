@@ -6,10 +6,11 @@
 
 * A [source layout][src-layout] python project/distribution with 2 packages/modules
 * [pyproject.toml][pyproject_config] configuration file
-    - scm versioning
+    - setuptools-scm default versioning
 * [pytest][pytest] testing framework
+    - pre-push hook to run tests, never upload broken code!
 * Auto-documentation using pdoc3, publishing pages in `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
-* 
+
 
 # Goal
 
