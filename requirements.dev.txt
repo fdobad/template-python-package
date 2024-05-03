@@ -1,7 +1,7 @@
-# -r requirements.txt
-# -r requirements.doc.txt
-
 setuptools_scm
+pytest
+pdoc3
+build
 
 python-lsp-ruff
 python-lsp-server
