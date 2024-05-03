@@ -1,4 +1,38 @@
 #!/bin/sh
-echo Pre-commit hook start - running tests : pytest
-echo To skip this hook/step: git commit --no-verify -m "commit message"
-pytest
+echo Pre-commit hook start
+
+current_branch=$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)
+if [ "$current_branch" != "doc" ]; then
+  echo "wrong branch"
+  exit
+fi
+
+# echo To skip this hook/step: git commit --no-verify -m "commit message"
+# pytest
+
+#
+# Build the documentation
+#
+
+# ONLY ONE PACKAGE
+
+# # clean the doc directory
+# if [ -d doc/mypkg ]; then
+#     rm -fr doc/mypkg
+# fi
+# # installed
+# pdoc --html --force --output-dir doc --config latex_math=True mypkg
+# not installed
+# pdoc --html --force --output-dir doc --config latex_math=True src/mypkg
+# pdoc --html --force --output-dir doc --config latex_math=True src/otherpkg
+# git add -f doc/mypkg
+
+# WHOLE PROJECT
+# clean the doc directory
+if [ -d doc/template-python-package ]; then
+    rm -r doc/template-python-package
+fi
+# build filtered .
+pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
+
+git add -f doc/template-python-package

@@ -5,12 +5,11 @@ This is the package docstring
 __author__ = "Fernando Badilla"
 __revision__ = "$Format:%H$"
 
-
-from pkg_resources import DistributionNotFound, get_distribution
+from importlib_metadata import PackageNotFoundError, distribution
 
 try:
-    __version__ = get_distribution(__name__).version
-except DistributionNotFound:
+    __version__ = distribution(__name__).version
+except PackageNotFoundError:
     # harcoded version number
     from ._version import __version__
 

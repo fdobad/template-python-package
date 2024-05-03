@@ -2,28 +2,34 @@
 ![auto workflow](https://github.com/fdobad/template-python-package/actions/workflows/auto.yml/badge.svg)
 <a href=https://github.com/psf/black>![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)</a>
 
-# Template Overview
+_Easy python project template_
 
+# Overview
 * A [source layout][src-layout] python project/distribution with 2 packages/modules
-* [pyproject.toml][pyproject_config] configuration file
+* [pyproject.toml][pyproject_config] project configuration file
     - setuptools-scm default versioning
-* [pytest][pytest] testing framework
-* Auto-documentation using pdoc3, publishing pages in `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
-* git hooks:
-    - pre-commit to run tests (never upload broken code!)
-    - pre-push to generate documentation
+* [pytest][pytest] unit testing
+* Code documentation page using pdoc3, publishing pages from `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
+* Optional git hooks:
+    - To run tests, could be in pre-commit or pre-push 
+    - To generate documentation in pre-commit
 
-# Goal
-
-An easy-to-document&version python distribution/project, by self publishing code docstrings and being pip installable.
-
-* Easy to install:
+# Install
+Command line interface:
 ```bash
 pip install git+https://github.com/user/repo.git
 ```
-(pypi comming soon)
+Line in `requirements.txt`
+```
+my-project-name @ git+https://github.com/user/repo.git
+```
+Required:  
+- A github account with ssh credentials  
+- Or deploy credentials  
 
-* To install specific version:
+_PyPI integration (`pip install project-name` comming soon)_
+
+## Specific version install
 ```bash
 pip install git+https://github.com/user/repo.git@SUFFIX
 # SUFFIX CAN BE:
@@ -39,35 +45,74 @@ Or as a line in requirements.txt:
 my-project-name @ git+https://github.com/user/repo.git@SUFFIX
 ```
 
-* To develop, install with editable flag:
+# Develop
 ```bash
-git clone git@git...
-cd repo
-# git checkout -b my_new_feature
-# pip install -r requirements.dev.txt
-# git clean -dfX -n
-# python -m setuptools_scm
-pip install -e .
+# clone
+git clone git@github.com:fdobad/template-python-package.git
+cd template-python-package
+
+# virtual environment
+python -m venv venv
+source venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.dev.txt
+
+# install in editable mode
+pip install --editable . 
+
+# live documentation
 pdoc --http localhost:8080 --config latex_math=True mypkg
+
+# choose your hooks (very optional)
+cp hooks/* .git/hooks/
+chmod +x .git/hooks/*
+
+# feature branch
+git checkout -b my_new_feature
+
+# test
+pytest
+
+# clean (-n is dry-run, remove to delete)
+git clean -dfX -n
+
+# view calculated version
+python -m setuptools_scm
+
+# tag
+git tag -a v1.2.3 -m 'message'
+
+# build : creates `dist` with .whl & tar.gz files
+python -m build
 ```
 
-# Daily usage 
-
-Activate your python venv, check if/where is installed: 
+## Keep in mind
+1. Activate your python venv, check if/where is installed:
 ```bash
 $ pip list | grep my-project-name
 my-project-name           0.0.0       /home/fdo/source/template-python-package
 ```
 * If a filepath to the local repo is shown and --editable was used: the project can be directly edited & the documentation served live  
-* Else from a commit, make sure it is pointing to the correct version on requirements.txt or the pip command
+* Else from a commit, make sure it is pointing to the correct version on requirements.txt or the pip command  
 
-Development tips:
-* Beware of python sessions not reloading the entire packages when `import mypkg`, __these should be restarted, not reset.__
-* Version control tracked files get automatically added to the release, so be tidy, aware of `.gitignore` & beware `git add .`
-* Do your feature branch to contribute! `git checkout -b my_new_feature`
-* Use docstrings and typed methods to build a great documentation! Even latex (to html or pdf) is available. [more info](https://pdoc3.github.io/pdoc/doc/pdoc/#what-objects-are-documented). At least: For a method, describe input `parameters & returns`, additionaly `exceptions, classes, variables, module header`, `docstring examples` are not tested at the time, use `pytest` instead
+2. Beware `import mypkg` is made once per [i]python session; changes will reflect when restarting, not resetting
+
+3. Version control tracked files inside src/pkg get automatically added to the release (be tidy, aware of `.gitignore` & beware `git add .`)
+
+4. Documenting with pdoc3:
+    1. `doc` is served by github pages (check `.github/workflows/*yml` for auto or manual configuration)
+    2. `doc` can be generated locally or remotely (manual or auto, if using weird dependencies building locally/manual is recommended)
+    3. A good practice is updating the web page only when pushing to a specific branch (like `doc`)
+    4. `doc` is added to .gitignore to avoid the clutter (useful when autogenerating with the pre-commit hook that only works on the `doc` branch). remove it or use `git add -f doc` to force adding it to the repo.
+    4. Docstrings support latex (also to html or pdf) is available. [more info](https://pdoc3.github.io/pdoc/doc/pdoc/#what-objects-are-documented). 
+
+5. Type hints are not enforced, but are a good practice. [more info](https://docs.python.org/3/library/typing.html)
+
+6. Minimal documentation should include: Module, global_variables, classes, methods docstrings. A good descriptive sentence (with and example) is better than a long paragraph of Arguments, Returns & Raises that Copilot can generate.
+
+7. TODO: Docstring examples are not tested! 
     
-* All new `.py` files should have at least `version` & `author` in the header, sample:
+8. New python files should have at least the following header:
 ```python
 #!python3
 """ 
@@ -80,77 +125,16 @@ __license__ = "https://anticapitalist.software"
 __revision__ = "$Format:%H$"
 ```
 
-# Setup pattern
-
-1. Fork, rename, clone
-2. Enable github pages for the repo ?
-3. Enable the pytest and pdoc hooks:
-```bash
-for i in hooks/*; 
-do 
-  cp $i .git/hooks/$i; 
-  chmod +x .git/hooks/$i
-done
-```
-4. Install requirements.dev.txt
-5. Change something, rebuilding the docs (`pdoc`) or run tests (`pytest`)
-6. Push (to feature branch)
-
-# Development
-
-## live
-```bash
-pip install --editable .
-pdoc --http localhost:8080 --config latex_math=True mypkg
-pdoc --http localhost:8081 --config latex_math=True otherpkg
-```
-
-## [testing with pytest][pytest]
-```
-pytest
-```
-
-## cleaning & troubleshooting
-Build files are not automatically cleaned!
-```bash
-# check first -n is --dry-run
-git clean -dfX -n
-# once sure, delete them
-git clean -dfX
-```
-
-## building
-```bash
-# upgrade base tools
-python -m pip install --upgrade build setuptools wheel pip
-
-# commit, push, clean
-
-# tag
-git tag -a v1.2.3 -m 'message'
-
-# creates dist folder with .whl & tar.gz
-python -m build
-```
-
-# github actions
-There're two actions (in .github/workflow) to make the web page:
-
-* manual: needs updating the doc before pushing  
-* auto: builds the doc online, needs updated requirements.txt or pyproject.toml:dependencies  
-
-The headers needs some configuration (uncommenting) to work, a good practice is to enable them `on branch doc`, to not update needlessly (only 2000 free mins a month)
-
-# pdoc
+### pdoc samples
 ```bash
 pdoc --html --force --output-dir doc .
 pdoc --html --http : --force --output-dir doc --config latex_math=True .
 pdoc --html --http localhost:8080 --force --output-dir doc mypkg
 ```
-other examples at hooks/pre-push  
+other examples at hooks/pre-commit
 https://github.com/pdoc3/pdoc/blob/master/pdoc/templates/config.mako
 
-# git tag
+### git tag(ging)
 Semantic versioning[semantic-versioning]: The idea of semantic versioning (or SemVer) is to use 3-part version numbers, major.minor.patch, where the project author increments:
 
     major when they make incompatible API changes,

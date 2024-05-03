@@ -4,10 +4,12 @@ name: build and publish doc
 on:
   push:
     branches:
-      - main
-    # Alternative: only build for tags.
+      # - main
+      - docs
+    # build on any tag
     # tags:
     #   - '*'
+  # manual launch build
   workflow_dispatch:
 
 # security: restrict permissions for CI jobs.
@@ -25,9 +27,11 @@ jobs:
           python-version: '3.11'
 
       - run: |
-          pip install -r requirements.doc.txt
+          python -m pip install --upgrade pip setuptools wheel
+          pip install pdoc3
+          pip install -r requirements.txt
           rm -r doc/template-python-package
-          pdoc --html --force --output-dir doc --config latex_math=True .
+          pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
 
       - uses: actions/upload-pages-artifact@v2
         with:
