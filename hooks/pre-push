@@ -4,21 +4,25 @@ echo "pre-push hook start - building documentation"
 # Build the documentation
 # clean the doc directory
 if [ -d doc/mypkg ]; then
-    rm -r doc/mypkg
+    rm -fr doc/mypkg
 fi
 # installed
 pdoc --html --force --output-dir doc --config latex_math=True mypkg
 
+# not installed
+# pdoc --html --force --output-dir doc --config latex_math=True src/mypkg
+# pdoc --html --force --output-dir doc --config latex_math=True src/otherpkg
+
+# include tests
 # clean the doc directory whats . name
 # if [ -d doc/template-python-package ]; then
 #     rm -r doc/template-python-package
 # fi
-# include tests
 # pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
 # all modules in src
 # pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
 
 # Add the modified files to the commit
-git add -f doc/*
+git add -f doc/mypkg
 
 echo "pre-push hook end"

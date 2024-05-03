@@ -8,9 +8,10 @@
 * [pyproject.toml][pyproject_config] configuration file
     - setuptools-scm default versioning
 * [pytest][pytest] testing framework
-    - pre-push hook to run tests, never upload broken code!
 * Auto-documentation using pdoc3, publishing pages in `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
-
+* git hooks:
+    - pre-commit to run tests (never upload broken code!)
+    - pre-push to generate documentation
 
 # Goal
 
