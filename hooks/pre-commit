@@ -1,5 +1,4 @@
 #!/bin/sh
-echo pre-commit hook start - running tests : pytest
+echo Pre-commit hook start - running tests : pytest
 echo To skip this hook/step: git commit --no-verify -m "commit message"
 pytest
-echo pre-commit hook end - if tests fail, commit will be aborted
