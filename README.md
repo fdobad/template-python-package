@@ -138,6 +138,12 @@ pdoc --html --http localhost:8080 --force --output-dir doc mypkg
 https://github.com/pdoc3/pdoc/blob/master/pdoc/templates/config.mako
 
 # git tag
+Semantic versioning[semantic-versioning]: The idea of semantic versioning (or SemVer) is to use 3-part version numbers, major.minor.patch, where the project author increments:
+
+    major when they make incompatible API changes,
+    minor when they add functionality in a backwards-compatible manner, and
+    patch, when they make backwards-compatible bug fixes.
+
 ```bash
 # list tags
 git tag
@@ -178,3 +184,4 @@ chat rooms, and fora is expected to follow the
 [auto-document]: https://pdoc3.github.io/pdoc
 [auto-publish-docs]: https://github.com/mitmproxy/pdoc/blob/main/.github/workflows/docs.yml
 [pytest]: https://docs.pytest.org/en/latest/getting-started.html
+[semantic-versioning]: https://packaging.python.org/en/latest/discussions/versioning/#valid-version-numbers

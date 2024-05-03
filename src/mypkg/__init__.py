@@ -1,9 +1,19 @@
 #!python3
-""" 👋🌎🔥
+"""👋🌎🔥
 This is the package docstring
 """
 __author__ = "Fernando Badilla"
-__version__ = 'v0.0.1+4-gc984bd5-dirty'
+
+from pkg_resources import DistributionNotFound, get_distribution
+
+try:
+    __version__ = get_distribution(__name__).version
+except DistributionNotFound:
+    # package is not installed
+    from ._version import get_versions
+
+    __version__ = get_versions()
+    pass
 
 import logging as _logging
 
