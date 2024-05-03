@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "pre-push hook start - building documentation"
+echo "post-commit hook start - building documentation"
 
 # Build the documentation
 # clean the doc directory
@@ -25,6 +25,5 @@ pdoc --html --force --output-dir doc --config latex_math=True mypkg
 # Add the modified files to the commit
 git add -f doc/mypkg
 git commit --amend -C HEAD --no-verify --no-edit
-git push
 
-echo "pre-push hook end"
+echo "post-commit hook end"
