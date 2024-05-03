@@ -19,6 +19,6 @@ pdoc --html --force --output-dir doc --config latex_math=True mypkg
 # pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
 
 # Add the modified files to the commit
-git add doc/*
+git add -f doc/*
 
 echo "pre-push hook end"
