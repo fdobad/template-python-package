@@ -2,14 +2,14 @@
 ![auto workflow](https://github.com/fdobad/template-python-package/actions/workflows/auto.yml/badge.svg)
 <a href=https://github.com/psf/black>![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)</a>
 
-  __version__ = 'v0.0.1+4-gc984bd5-dirty'
-
 # Template Overview
 
 * A [source layout][src-layout] python project/distribution with 2 packages/modules
 * [pyproject.toml][pyproject_config] configuration file
+    - scm versioning
+* [pytest][pytest] testing framework
 * Auto-documentation using pdoc3, publishing pages in `doc/my-repo-name` to [`https://user.github.io/my-repo-name`](https://fdobad.github.io/template-python-package)
-* A simple precommit hook to auto-update versions in python files
+* 
 
 # Goal
 
@@ -43,6 +43,7 @@ cd repo
 # git checkout -b my_new_feature
 # pip install -r requirements.dev.txt
 # git clean -dfX -n
+# python -m setuptools_scm
 pip install -e .
 pdoc --http localhost:8080 --config latex_math=True mypkg
 ```
@@ -62,7 +63,7 @@ Development tips:
 * Beware of python sessions not reloading the entire packages when `import mypkg`, these should be restarted, not reset.
 * Version control tracked files get automatically added to the release, so be tidy, aware of `.gitignore` & beware `git add .`
 * Do your feature branch to contribute! `git checkout -b my_new_feature`
-* Use docstrings and typed methods to build a great documentation! Even latex (to html or pdf) is available. [more info](https://pdoc3.github.io/pdoc/doc/pdoc/#what-objects-are-documented). For a method, describe input `parameters & returns`, additionaly `exceptions, classes, variables, module header`, `docstring examples` are not tested at the time, use `pytest` instead
+* Use docstrings and typed methods to build a great documentation! Even latex (to html or pdf) is available. [more info](https://pdoc3.github.io/pdoc/doc/pdoc/#what-objects-are-documented). At least: For a method, describe input `parameters & returns`, additionaly `exceptions, classes, variables, module header`, `docstring examples` are not tested at the time, use `pytest` instead
     
 * All new `.py` files should have at least `version` & `author` in the header, sample:
 ```python
@@ -80,6 +81,7 @@ __version__ = "v0.0.1"
 
 1. Fork, rename, clone
 2. Enable github pages for the repo ?
+No more hooks
 3. Enable the version updating hook:
 ```bash
 cp hook/pre-commit .git/hooks/.

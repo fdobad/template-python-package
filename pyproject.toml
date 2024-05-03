@@ -24,7 +24,11 @@ dependencies = [
 dynamic = ["version"]
 
 [tool.setuptools_scm]
-version_file = "src/mypkg/_version.py"
+# version_file = "src/mypkg/_version.py"
+version_files = [ 
+    "src/mypkg/_version.py",
+    "src/otherpkg/_version.py"
+]
 
 [tool.pytest.ini_options]
 minversion = "6.0"

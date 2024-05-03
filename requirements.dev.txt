@@ -1,7 +1,13 @@
 # -r requirements.txt
 # -r requirements.doc.txt
-python-lsp-server[pylint]
+
+setuptools_scm
+
+python-lsp-ruff
+python-lsp-server
 pylsp-mypy
-python-lsp-black
 pylsp-rope
+python-lsp-isort
+python-lsp-black
+
 # qgis-stubs @ git+https://github.com/leonhard-s/qgis-stubs.git

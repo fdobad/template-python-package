@@ -3,7 +3,15 @@
 This is the OTHER PKG package docstring
 """
 __author__ = "Fernando Badilla"
-__version__ = 'v0.0.1-0-gecfa54c-dirty'
+__revision__ = "$Format:%H$"
+
+from pkg_resources import DistributionNotFound, get_distribution
+
+try:
+    __version__ = get_distribution(__name__).version
+except DistributionNotFound:
+    # harcoded version number
+    from ._version import __version__
 
 import logging as _logging
 

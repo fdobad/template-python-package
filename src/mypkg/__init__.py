@@ -3,17 +3,16 @@
 This is the package docstring
 """
 __author__ = "Fernando Badilla"
+__revision__ = "$Format:%H$"
+
 
 from pkg_resources import DistributionNotFound, get_distribution
 
 try:
     __version__ = get_distribution(__name__).version
 except DistributionNotFound:
-    # package is not installed
-    from ._version import get_versions
-
-    __version__ = get_versions()
-    pass
+    # harcoded version number
+    from ._version import __version__
 
 import logging as _logging
 

@@ -3,7 +3,7 @@
 This is the mypkg my_module docstring
 """
 __author__ = "Fernando Badilla"
-__version__ = 'v0.0.1+4-gc984bd5-dirty'
+__version__ = "v0.0.1+4-gc984bd5-dirty"
 
 import logging as _logging
 from sys import argv as _argv
@@ -74,7 +74,7 @@ def my_documented_function(*args, **kwargs) -> bool:
 
 
 def morefunc(x: int = 0):
-    return x**2 + 3
+    return x**2 + 33
 
 
 def main(_argv):
