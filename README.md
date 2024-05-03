@@ -21,8 +21,9 @@ An easy-to-document&version python distribution/project, by self publishing code
 ```bash
 pip install git+https://github.com/user/repo.git
 ```
+(pypi comming soon)
 
-* To version:
+* To install specific version:
 ```bash
 pip install git+https://github.com/user/repo.git@SUFFIX
 # SUFFIX CAN BE:
@@ -52,17 +53,16 @@ pdoc --http localhost:8080 --config latex_math=True mypkg
 
 # Daily usage 
 
-Activate you python venv, check if/where is installed: 
+Activate your python venv, check if/where is installed: 
 ```bash
 $ pip list | grep my-project-name
 my-project-name           0.0.0       /home/fdo/source/template-python-package
 ```
 * If a filepath to the local repo is shown and --editable was used: the project can be directly edited & the documentation served live  
-* Else from a commit, be sure it is pointing to the correct one on requirements.txt
-* Or uninstall and focus on testing
+* Else from a commit, make sure it is pointing to the correct version on requirements.txt or the pip command
 
 Development tips:
-* Beware of python sessions not reloading the entire packages when `import mypkg`, these should be restarted, not reset.
+* Beware of python sessions not reloading the entire packages when `import mypkg`, __these should be restarted, not reset.__
 * Version control tracked files get automatically added to the release, so be tidy, aware of `.gitignore` & beware `git add .`
 * Do your feature branch to contribute! `git checkout -b my_new_feature`
 * Use docstrings and typed methods to build a great documentation! Even latex (to html or pdf) is available. [more info](https://pdoc3.github.io/pdoc/doc/pdoc/#what-objects-are-documented). At least: For a method, describe input `parameters & returns`, additionaly `exceptions, classes, variables, module header`, `docstring examples` are not tested at the time, use `pytest` instead
@@ -74,21 +74,23 @@ Development tips:
 this text is the header module docstring
 """
 __author__ = "Software Authors Name"
-__copyright__ = "Copyright (C) 1 May 1886 Author Name"
+__date__ = "2024-05-01"
+__copyright__ = "Copyleft (C) 1 May 1886 Author Name"
 __license__ = "https://anticapitalist.software"
-__version__ = "v0.0.1"
+__revision__ = "$Format:%H$"
 ```
 
 # Setup pattern
 
 1. Fork, rename, clone
 2. Enable github pages for the repo ?
-No more hooks
-3. Enable the version updating hook:
+3. Enable the pytest and pdoc hooks:
 ```bash
-cp hook/pre-commit .git/hooks/.
-chmod +x .git/hooks/pre-commit
-# TODO test on windows
+for i in hooks/*; 
+do 
+  cp $i .git/hooks/$i; 
+  chmod +x .git/hooks/$i
+done
 ```
 4. Install requirements.dev.txt
 5. Change something, rebuilding the docs (`pdoc`) or run tests (`pytest`)
@@ -102,27 +104,33 @@ pip install --editable .
 pdoc --http localhost:8080 --config latex_math=True mypkg
 pdoc --http localhost:8081 --config latex_math=True otherpkg
 ```
+
 ## [testing with pytest][pytest]
 ```
-pip uninstall my-project-name
 pytest
 ```
-## building
-```bash
-# just in case upgrade build tool
-python -m pip install --upgrade build
-# creates dist folder with .whl & tar.gz
-python -m build
-# recreates docs
-pdoc --html --force --output-dir doc .
-```
-## troubleshoot
+
+## cleaning & troubleshooting
 Build files are not automatically cleaned!
 ```bash
 # check first -n is --dry-run
 git clean -dfX -n
 # once sure, delete them
 git clean -dfX
+```
+
+## building
+```bash
+# upgrade base tools
+python -m pip install --upgrade build setuptools wheel pip
+
+# commit, push, clean
+
+# tag
+git tag -a v1.2.3 -m 'message'
+
+# creates dist folder with .whl & tar.gz
+python -m build
 ```
 
 # github actions
@@ -139,6 +147,7 @@ pdoc --html --force --output-dir doc .
 pdoc --html --http : --force --output-dir doc --config latex_math=True .
 pdoc --html --http localhost:8080 --force --output-dir doc mypkg
 ```
+other examples at hooks/pre-push  
 https://github.com/pdoc3/pdoc/blob/master/pdoc/templates/config.mako
 
 # git tag
