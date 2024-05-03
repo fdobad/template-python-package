@@ -25,5 +25,6 @@ pdoc --html --force --output-dir doc --config latex_math=True mypkg
 # Add the modified files to the commit
 git add -f doc/mypkg
 git commit --no-verify --amend --no-edit
+git push
 
 echo "pre-push hook end"
