@@ -166,3 +166,4 @@ cython_debug/
 *~
 
 doc/*
+src/mypkg/_version.py
