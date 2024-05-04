@@ -101,13 +101,14 @@ python -m build
 ```
 
 ## Keep in mind
-1. To generate a clean build, make sure `version_file` is commented (writing a version file is useful for tracking dirty development versions, but changes that file every time you build, so you'll never get a clean tag)
+1. To generate a clean build, make sure `version_file` is commented (else building will change that file polluting the version)
 ```
 [tool.setuptools_scm]
 # version_file = "src/mypkg/_version.py"
 ```
+2. On editable installs, update `_version.py` version by running `pip install -e .` again
 
-2. Activate your python venv, check if/where is installed:
+3. Activate your python venv, check if/where is installed:
 ```bash
 $ pip list | grep my-project-name
 my-project-name           0.0.0       /home/fdo/source/template-python-package
@@ -115,24 +116,24 @@ my-project-name           0.0.0       /home/fdo/source/template-python-package
 * If a filepath to the local repo is shown and --editable was used: the project can be directly edited & the documentation served live  
 * Else from a commit, make sure it is pointing to the correct version on requirements.txt or the pip command  
 
-3. Beware `import mypkg` is made once per [i]python session; changes will reflect when restarting, not resetting
+4. Beware `import mypkg` is made once per [i]python session; changes will reflect when restarting, not resetting
 
-4. Version control tracked files inside src/pkg get automatically added to the release (be tidy, aware of `.gitignore` & beware `git add .`)
+5. Version control tracked files inside src/pkg get automatically added to the release (be tidy, aware of `.gitignore` & beware `git add .`)
 
-5. Documenting with pdoc3:
+6. Documenting with pdoc3:
     1. `doc` is served by github pages (check `.github/workflows/*yml` for auto or manual configuration)
     2. `doc` can be generated locally or remotely (manual or auto, if using weird dependencies building locally/manual is recommended)
     3. A good practice is updating the web page only when pushing to a specific branch (like `doc`)
     4. `doc` is added to .gitignore to avoid the clutter (useful when autogenerating with the pre-commit hook that only works on the `doc` branch). remove it or use `git add -f doc` to force adding it to the repo.
     5. Docstrings support latex (also to html or pdf) is available. [more info](https://pdoc3.github.io/pdoc/doc/pdoc/#what-objects-are-documented). 
 
-6. Type hints are not enforced, but are a good practice. [more info](https://docs.python.org/3/library/typing.html)
+7. Type hints are not enforced, but are a good practice. [more info](https://docs.python.org/3/library/typing.html)
 
-7. Minimal documentation should include: Module, global_variables, classes, methods docstrings. A good descriptive sentence (with and example) is better than a long paragraph of Arguments, Returns & Raises that Copilot can generate.
+8. Minimal documentation should include: Module, global_variables, classes, methods docstrings. A good descriptive sentence (with and example) is better than a long paragraph of Arguments, Returns & Raises that Copilot can generate.
 
-8. TODO: Docstring examples are not tested! 
+9. TODO: Docstring examples are not tested! 
     
-9. New python files should have at least the following header:
+10. New python files should have at least the following header:
 ```python
 #!python3
 """ 
