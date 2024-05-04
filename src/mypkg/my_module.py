@@ -10,7 +10,7 @@ import sys
 
 import numpy as np
 
-from . import PACKAGE_WIDE_CONSTANT
+from mypkg import PACKAGE_WIDE_CONSTANT
 
 logger = logging.getLogger(__name__)
 
@@ -71,21 +71,19 @@ def my_documented_function(*args, **kwargs) -> bool:
     return True
 
 
-def morefunc(x: int = 0):
-    return x**2 + 33
+def jalisco_nunca_pierde(challenge: float | int = 0):
+    """Jalisco nunca pierde is slang for a 1937 movie "Jalisco never loses". This function sums the input and adds 1 to win!
 
-
-def jalisco_nunca_pierde(numbers: list):
-    """Jalisco nunca pierde is slang for a 1937 movie "Jalisco never loses"."""
-    if not isinstance(numbers, list):
-        numbers = [numbers]
-    tmp = []
-    for num in numbers:
-        try:
-            tmp += [float(num)]
-        except ValueError:
-            pass
-    retval = np.array(tmp).sum() + 1
+    Args:
+        challenge (float | int, optional): challenge number. Defaults to 0.
+    Returns:
+        float | int: challenge + 1 winning!
+    Raises:
+        ValueError: If numbers is not a list.
+    """
+    if not isinstance(challenge, (float, int)):
+        raise ValueError("challenge is not a (float or int) number")
+    retval = challenge + 1
     logger.info("Jalisco wins with: %s,", retval)
     return retval
 
@@ -94,8 +92,14 @@ def arg_parser(argv):
     import argparse
 
     parser = argparse.ArgumentParser(description="This is a sample program.")
-    parser.add_argument("numbers", nargs="*", help="List of numbers")
+    parser.add_argument("number", nargs="?", help="number to challenge Jalisco.")
     parser.add_argument("--verbose", "-v", action="count", default=0)
+    parser.add_argument(
+        "--retval",
+        "-r",
+        action="store_true",
+        help="Return value from main instead of return code. Useful for integrating main into other scripts.",
+    )
     return parser.parse_args(argv)
 
 
@@ -103,12 +107,12 @@ def main(argv=None):
     """Main can be run from command line or import it passing a list as sys.argv.
     On cli calls, it should return a status code: 0 for success, >=1 for failure(s).
     On scripting calls, an argument can modify this behavior.
+
+    args = arg_parser(None)
     """
-    if argv is None:
-        argv = sys.argv
-    argv = argv[1:]
+    if argv is sys.argv:
+        argv = sys.argv[1:]
     args = arg_parser(argv)
-    print(args)
     if args.verbose != 0:
         global logger
         from mypkg import setup_logger
@@ -121,12 +125,15 @@ def main(argv=None):
             case _:
                 logger = setup_logger(verbosity="DEBUG")
 
-    win = jalisco_nunca_pierde(args.numbers)
-    return 0
-    if len(argv) > 1:
-        num = int(argv[1])
-        logger.info(f"Hello, {num}!")
-        print(my_function(num))
+    try:
+        win = jalisco_nunca_pierde(float(args.number))
+        print("jalisco won with:", win)
+        if args.retval:
+            return win
+        return 0
+    except Exception as e:
+        logger.error("Error: %s", e, exc_info=True)
+        return 1
 
 
 if __name__ == "__main__":
