@@ -1,5 +1,6 @@
 #!/bin/sh
 echo Pre-commit hook start
+echo Current dir is $(pwd)
 
 current_branch=$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)
 if [ "$current_branch" != "doc" ]; then
@@ -35,4 +36,4 @@ fi
 # build filtered .
 pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
 
-git add -f doc/template-python-package
+git add -f doc/template-python-package/**
