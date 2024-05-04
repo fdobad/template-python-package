@@ -73,21 +73,35 @@ git checkout -b my_new_feature
 # test
 pytest
 
+# commit, push, pull request
+```
+# Build
+```bash
+# make sure to comment version_file in [tool.setuptools_scm] section in pyproject.toml
+
+# using GNU sed, switch comment in/out
+sed -i -e 's/^version_file =/#version_file =/; t; s/^#version_file =/version_file =/' pyproject.toml
+
+# alternative: find, move to next line, then search & replace:
+# sed '/pattern_to_find/{n; s/search_string/replacement_string/;}' filename
+# sed '/tool.setuptools_scm/{n; s/^version_file =/#version_file =/; t; s/^#version_file =/version_file =/;}' filename
+
 # clean (-n is dry-run, remove to delete)
 git clean -dfX -n
 
-# view calculated version
-python -m setuptools_scm
-
 # tag
 git tag -a v1.2.3 -m 'message'
+git push origin v1.2.3
+
+# view calculated version to check is not dirty
+python -m setuptools_scm
 
 # build : creates `dist` with .whl & tar.gz files
 python -m build
 ```
 
 ## Keep in mind
-1. To generate a clean release, make sure `version_file` is commented (writing a version file is useful for tracking dirty versions, but changes that file every time you build, so you'll never get a clean tag)
+1. To generate a clean build, make sure `version_file` is commented (writing a version file is useful for tracking dirty development versions, but changes that file every time you build, so you'll never get a clean tag)
 ```
 [tool.setuptools_scm]
 # version_file = "src/mypkg/_version.py"
