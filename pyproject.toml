@@ -11,7 +11,7 @@ authors = [
 ]
 description = "My project description"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 keywords = ["template", "package"]
 license = {text = "GPLv3"} # , file = "LICENSE.txt"
 classifiers = [
@@ -23,11 +23,25 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[tool.setuptools_scm]
+version_file = "src/mypkg/_version.py"
+# FIXME: This is not working
+# version_files = [ 
+#     "src/mypkg/_version.py",
+#     "src/otherpkg/_version.py"
+# ]
+
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra"
+addopts = [
+    "-ra",
+    "--import-mode=importlib",
+]
 testpaths = [
     "tests",
+]
+pythonpath = [
+  "src"
 ]
 
 # [project.urls]

@@ -1,0 +1,4 @@
+#!/bin/sh
+echo Pre-push hook start - running tests using pytest
+echo To upload non-passing garbage! Skip the tests with: git push --no-verify
+pytest
