@@ -30,7 +30,7 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install pdoc3
           pip install -r requirements.txt
-          rm -r doc/template-python-package
+          rm -fr doc/template-python-package
           pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .
 
       - uses: actions/upload-pages-artifact@v2
