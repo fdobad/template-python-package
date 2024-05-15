@@ -19,7 +19,6 @@ classifiers = [
 ]
 dependencies = [
     "numpy",
-    'importlib-metadata',
 ]
 dynamic = ["version"]
 
@@ -30,6 +29,7 @@ version_file = "src/mypkg/_version.py"
 #     "src/mypkg/_version.py",
 #     "src/otherpkg/_version.py"
 # ]
+readme = {file = ["README.md"], content-type = "text/markdown"}
 
 [tool.pytest.ini_options]
 minversion = "6.0"

@@ -6,9 +6,8 @@ __author__ = "Fernando Badilla"
 __revision__ = "$Format:%H$"
 
 import logging
+from importlib.metadata import PackageNotFoundError, distribution
 from pathlib import Path
-
-from importlib_metadata import PackageNotFoundError, distribution
 
 logger = logging.getLogger(__name__)
 
@@ -30,13 +29,13 @@ PACKAGE_WIDE_CONSTANT = 42
 """ this is a variable docstring """
 
 
-def setup_logger(name: str = __name__, verbosity: str = "INFO", logfile: Path | None = None):
+def setup_logger(name: str = __name__, verbosity: str | int = "INFO", logfile: Path | None = None):
     """ Users or developers not implementing their own logger should use this function to get enhanced program execution information.
     Capture the logger, setup its __name__, verbosity, stream handler & rotating logfile.
 
     Args:
         name (str, optional): Name of the logger. Defaults to \__name __ 
-        verbosity (str, optional): Verbosity level, implemented INFO (20, default), WARNING (30) or DEBUG (10, no matches)
+        verbosity (str | int): Verbosity level, implemented, WARNING:1, INFO:2 (default), or DEBUG:3
         logfile (Path, optional): Create a -rotated- logfile (5 files, 25MB each).
     Returns:
         logger (Logger):  All code in this pkg uses logger.info("..."), logger.debug, etc.
@@ -61,13 +60,14 @@ def setup_logger(name: str = __name__, verbosity: str = "INFO", logfile: Path | 
 
         rf_handler = RotatingFileHandler(logfile, maxBytes=25 * 1024, backupCount=5)
     # Set the logs level
-    match verbosity:
-        case "WARNING":
-            level = logging.WARNING
-        case "INFO":
-            level = logging.INFO
-        case _:
-            level = logging.DEBUG
+    if verbosity == "WARNING" or verbosity == 1:
+        level = logging.WARNING
+    elif verbosity == "INFO" or verbosity == 2:
+        level = logging.INFO
+    elif verbosity == "DEBUG" or verbosity == 3:
+        level = logging.DEBUG
+    else:
+        level = logging.DEBUG
     logger.setLevel(level)
     stream_handler.setLevel(level)
     if logfile:

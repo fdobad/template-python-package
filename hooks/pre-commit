@@ -31,7 +31,7 @@ fi
 # WHOLE PROJECT
 # clean the doc directory
 if [ -d doc/template-python-package ]; then
-    rm -r doc/template-python-package
+    rm -fr doc/template-python-package
 fi
 # build filtered .
 pdoc --html --force --output-dir doc --filter=src,tests --config latex_math=True .

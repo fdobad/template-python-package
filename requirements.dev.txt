@@ -10,4 +10,6 @@ pylsp-rope
 python-lsp-isort
 python-lsp-black
 
+ipython
+
 # qgis-stubs @ git+https://github.com/leonhard-s/qgis-stubs.git
